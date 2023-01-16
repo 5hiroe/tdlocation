@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tdlocation/models/habitation.dart';
+import 'package:tdlocation/views/habitation_feature_widget.dart';
 
-import '../models/habitation_service.dart';
-import '../models/typehabitat.dart';
-import 'habitation_option.dart';
+import 'habitation_details.dart';
+import 'habitation_service.dart';
 
 class HabitationList extends StatelessWidget {
   final bool isHouseList;
@@ -33,63 +33,45 @@ class HabitationList extends StatelessWidget {
 
   _buildRow(Habitation habitation, BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(4.0),
-      child: Column(
-        children: [
-          Container(
-            height: 150,
-            width: MediaQuery.of(context).size.width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image.asset(
-                habitation.image,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-          _buildDetails(habitation),
-        ],
-      ),
-    );
+        margin: const EdgeInsets.all(4.0),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HabitationDetails(habitation)),
+              );
+            },
+            child: _buildDetails(habitation)));
   }
 
   _buildDetails(Habitation habitation) {
     var format = NumberFormat('### €');
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: ListTile(
-                  title: Text(habitation.libelle),
-                  subtitle: Text(habitation.adresse),
-                ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: ListTile(
+                title: Text(habitation.libelle),
+                subtitle: Text(habitation.adresse),
               ),
-              Expanded(
-                flex: 1,
-                child: Text(
-                  format.format(habitation.prixmois),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                      fontSize: 22),
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              HabitationOption(
-                  icon: Icons.group, texte: '${habitation.chambres} personnes'),
-              HabitationOption(
-                  icon: Icons.fit_screen, texte: '${habitation.superficie} m²'),
-            ],
-          )
-        ],
-      ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text(
+                format.format(habitation.prixmois),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                    fontSize: 22),
+              ),
+            )
+          ],
+        ),
+        HabitationFeatureWidget(habitation)
+      ],
     );
   }
 }

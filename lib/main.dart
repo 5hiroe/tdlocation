@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tdlocation/models/habitation_service.dart';
+import 'package:tdlocation/views/habitation_service.dart';
 import 'package:tdlocation/share/location_style.dart';
 import 'package:tdlocation/share/location_text_style.dart';
 import 'package:tdlocation/views/habitation_list.dart';
