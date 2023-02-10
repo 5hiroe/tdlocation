@@ -1,6 +1,6 @@
 import 'package:tdlocation/models/typehabitat.dart';
 
-class TypehabitatData {
+class TypeHabitatData {
   static final data = [
     {"id": 1, "libelle": "Maison"},
     {"id": 2, "libelle": "Appartement"}

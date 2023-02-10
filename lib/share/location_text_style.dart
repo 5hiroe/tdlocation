@@ -22,6 +22,8 @@ class LocationTextStyle {
   static final boldTextStyle =
       baseTextStyle.copyWith(fontWeight: FontWeight.bold);
 
+  static final boldBigTextStyle = boldTextStyle.copyWith(fontSize: 16.0);
+
   static final subTitleboldTextStyle =
       baseTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 16.0);
 }

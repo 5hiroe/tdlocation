@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tdlocation/views/habitation_service.dart';
 import 'package:tdlocation/share/location_style.dart';
 import 'package:tdlocation/share/location_text_style.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Locations'),
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      supportedLocales: const [Locale('en'), Locale('fr')],
     );
   }
 }

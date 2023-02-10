@@ -9,7 +9,7 @@ class HabitationService {
   var _habitations;
 
   HabitationService() {
-    _typehabitats = TypehabitatData.buildList();
+    _typehabitats = TypeHabitatData.buildList();
     _habitations = HabitationsData.buildList();
   }
 

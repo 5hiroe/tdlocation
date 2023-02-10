@@ -6,9 +6,9 @@ class Habitation {
   String image;
   String libelle;
   String adresse;
+  int nbpersonnes;
   int chambres;
   int superficie;
-  int nbpersonnes;
   double prixmois;
   int lits;
   int salleBains;
@@ -21,50 +21,44 @@ class Habitation {
       this.image,
       this.libelle,
       this.adresse,
-      this.chambres,
-      this.superficie,
       this.nbpersonnes,
-      this.prixmois,
+      this.chambres,
       this.lits,
       this.salleBains,
+      this.superficie,
+      this.prixmois,
       {this.options = const [],
       this.optionsPayantes = const []});
-
   Habitation.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         typeHabitat = TypeHabitat.fromJson(json['typehabitat']),
         image = json['image'],
         libelle = json['libelle'],
         adresse = json['adresse'],
-        chambres = json['chambres'],
-        superficie = json['superficie'],
         nbpersonnes = json['habitantsmax'],
-        prixmois = json['prixmois'],
+        chambres = json['chambres'],
         lits = json['lits'],
         salleBains = json['sdb'],
-        options = json['items'] != null
-            ? (json['items'] as List)
-                .map<Option>((item) => Option.fromJson(item))
-                .toList()
-            : [Option(0, 'Aucune option disponible')],
-        optionsPayantes = json['optionspayantes'] != null
-            ? (json['optionspayantes'] as List)
-                .map<OptionPayante>((item) => OptionPayante.fromJson(item))
-                .toList()
-            : [OptionPayante(0, 'Aucune option payante disponible')];
+        superficie = json['superficie'],
+        prixmois = json['prixmois'],
+        options = (json['items'] as List)
+            .map((item) => Option.fromJson(item))
+            .toList(),
+        optionsPayantes = (json['optionpayantes'] as List)
+            .map((item) => OptionPayante.fromJson(item))
+            .toList();
 }
 
 class Option {
   int id;
   String libelle;
   String description;
-
   Option(this.id, this.libelle, {this.description = ""});
 
   Option.fromJson(Map<String, dynamic> json)
-      : id = json['id'] ?? '',
-        libelle = json['libelle'] ?? '',
-        description = json['description'] ?? '';
+      : id = json['id'],
+        libelle = json['libelle'],
+        description = json['description'];
 }
 
 class OptionPayante extends Option {
@@ -74,6 +68,14 @@ class OptionPayante extends Option {
       {super.description = "", this.prix = 0});
 
   OptionPayante.fromJson(Map<String, dynamic> json)
-      : prix = json['prix'] ?? '',
-        super(json['id'], json['libelle'], description: json['description']);
+      : prix = json['prix'],
+        super.fromJson(json['optionpayante']);
+}
+
+class OptionPayanteCheck extends OptionPayante {
+  bool checked;
+
+  OptionPayanteCheck(int id, String libelle, this.checked,
+      {String description = "", required double prix})
+      : super(id, libelle, description: description, prix: prix);
 }
