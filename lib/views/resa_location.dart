@@ -17,6 +17,7 @@ class _ResaLocationState extends State<ResaLocation> {
   DateTime dateFin = DateTime.now();
   String nbPersonnes = '1';
   List<OptionPayanteCheck> optionPayanteChecks = [];
+  double prixTotal = 0.0;
 
   var format = NumberFormat("### €");
 
@@ -34,7 +35,7 @@ class _ResaLocationState extends State<ResaLocation> {
           _buildDates(),
           _buildNbPersonnes(),
           _buildOptionsPayantes(context),
-          TotalWidget(prix: widget._habitation.prixmois),
+          TotalWidget(prix: prixTotal),
           _buildRentButton(),
         ],
       ),
@@ -157,6 +158,7 @@ class _ResaLocationState extends State<ResaLocation> {
             element.id, element.libelle, false,
             description: element.description, prix: element.prix));
       }
+      prixTotal = widget._habitation.prixmois;
     }
   }
 
@@ -173,6 +175,9 @@ class _ResaLocationState extends State<ResaLocation> {
                         selected: optionPayanteChecks[i].checked,
                         onChanged: (value) => setState(() {
                           optionPayanteChecks[i].checked = value!;
+                          value
+                              ? prixTotal += optionPayanteChecks[i].prix
+                              : prixTotal -= optionPayanteChecks[i].prix;
                         }),
                         secondary: const Icon(Icons.shopping_cart),
                         title: Text(optionPayanteChecks[i].libelle,
